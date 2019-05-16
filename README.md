@@ -1,0 +1,3 @@
+###Intro...
+Creating a script to pull of fraud data from Experian's 2017 geomap: 
+https://www.experian.co.uk/identity-and-fraud/fraudmap/
