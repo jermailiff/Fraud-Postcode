@@ -1,16 +1,29 @@
 require 'mechanize'
+require 'json'
+require 'csv'
 
+
+# need to output into csv
 class Scraper
     agent = Mechanize.new
-    page = agent.get('https://www.experian.co.uk/identity-and-fraud/fraudmap/')
-    page_form = page.forms[0]
-    # page_form[0] = 'ps'
-    postcode_field = page_form.fields[0]
-    postcode_field.value = 'NW61PJ'
-    page2 = page_form.submit
-    puts page2.uri
+    page = 'http://52.19.27.200/fraud-map/?ps='
+    postcode = 'NW61PJ'
+    page += postcode
+    page = agent.get(page)
+    body = JSON.parse(page.body)
+    body = body["data"]
+    data = {
+            :first_party_fraud => body["postcode_sector"],
+            :third_party_fraud => body["third_party_fraud"],
+            :consumer_spending => body["real_consumer_spending"],
+            :unemployment_rate => body["unemployment_rate"],
+            :population => body["population"]
+            }
 end
 
 Scraper
+
+
+
 
 
